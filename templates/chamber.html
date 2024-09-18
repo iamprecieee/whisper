@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamber</title>
+    <link rel="stylesheet" href="{% static 'css/chamber.css' %}">
+</head>
+<body>
+    <div class="compass">
+        <header id="header">
+            <h1>{{ chambername }}</h1>
+        </header>
+        <div class="status-bar">
+            <!--Status bar-->
+            <span id="active-status"></span>
+        </div>
+
+        <!--Pagination controls-->
+        <div class="pagination">
+            <button id="previous-button" data-url="{{ previous }}" {% if not previous %} hidden {% endif %}><small>load previous messages...</small></button>
+        </div>
+
+        <!--Chat log-->
+        <div class="chat-log">
+            {% for message in messages %}
+                <div>
+                    {% if message.message_type == "TXT" %}
+                        <span>{{ message.text_content }}</span><br>
+                    {% endif %}
+                    <small>{{ message.created }}</small>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!--Input/buttons-->
+        <div class="input-button">
+            <button>
+                <span class="video">📹</span>
+            </button>
+            <input type="text" name="" id="message-input">
+            <button>
+                <span class="audio">🎙️</span>
+            </button>
+        </div>
+        <div class="submit">
+            <input type="submit" value="send">
+        </div>
+    </div>
+
+    <!-- JSON Script Tags for Context Data -->
+    {{ chamber_id|json_script:"chamber-id" }} 
+    {{ chambername|json_script:"chambername" }}
+    {{ username|json_script:"username" }}
+    {{ is_debug|json_script:"is_debug" }}
+    {{ previous|json_script:"previous" }}
+    {{ next|json_script:"next" }}
+
+    <script src="{% static 'js/chamber.js' %}"></script>
+</body>
+</html>

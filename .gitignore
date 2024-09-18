@@ -1,0 +1,12 @@
+venv/
+migrations/
+__pycache__/
+db.sqlite3
+*.pyc
+staticfiles/
+.env
+media/
+certs/
+*.wav
+*.png
+.DS_Store
